@@ -1,0 +1,25 @@
+form label {
+    float: left;
+    margin-top: 10px;
+    width: 100px;
+}
+
+form p {
+    padding-left: 100px;
+}
+
+form p.datewidget {
+   padding-left: 70px;
+}
+
+form label[for=id_start_0], form label[for=id_end_0] {
+   width: 40px;
+}
+
+form #id_title {
+   width: 378px;
+}
+
+form .timepicker {
+   width: 40px;
+}

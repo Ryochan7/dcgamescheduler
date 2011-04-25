@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block extra_css %}{{ form.media.css }}{% endblock %}
+{% block extra_javascript %}{{ form.media.js }}{% endblock %}
+{% block title %}Create Event{% endblock %}
+
+{% block content %}
+    <div class="wholepage container showgrid">
+        <div class="span-24 last prepend-top append-bottom">
+            <a href="{% url index %}">Calendar</a>
+        </div>
+        <div class="span-24 last append-bottom">
+            {% block inner %}
+            <h1>Create Event</h1>
+            <form action="{% url event_create %}" method="post">{% csrf_token %}
+            <ul style="list-style: none; padding-left: 0px;">
+                {{ form.as_ul }}
+            </ul>
+                <input type="submit" value="Add Event" />
+            </form>
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}
+

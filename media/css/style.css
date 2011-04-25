@@ -1,0 +1,73 @@
+.calendar .month {
+   text-align: center;
+   font-size: 2.0em;
+}
+
+.calendar .dayname {
+   text-align: center;
+}
+
+.calendar .today {
+   background-color: #cfcdcd;
+}
+
+.calendar .today .day_header {
+   background-color: #f6ff00;
+}
+
+.calendar .otherMonth  {
+   background-color: #000000;
+}
+   
+.calendar .calday {
+   background-color: #2f2f2f;   
+}
+
+.calendar .daynum {
+   padding-left: 6px;
+}
+
+.calendar td {
+   vertical-align: top;
+   margin: 0px;
+   padding: 0px;
+   text-align: center;
+   border-right: 1px solid #FFFFFF;
+   border-bottom: 1px solid #FFFFFF;
+   height: 80px;
+}
+
+.calendar .day_header {
+   background-color: #0a0a0a;
+   text-align: left;
+}
+
+.calendar td ul {
+   list-style: none;
+   margin: 0px;
+   padding: 0px;
+}
+
+.calendar ul li {
+   border-bottom: 1px solid #FFFFFF;
+   color: #FFFFFF;
+   text-align: center;
+}
+
+.calendar ul .last {
+   border-bottom: none;
+}
+
+.calendar li .details {
+   background-color: #FFFFFF;
+   /*display: none;*/
+}
+
+.calsearch {
+   margin-top: -8px;
+}
+
+.calsearch p {
+   display: inline;
+   margin-right: 10px;
+}

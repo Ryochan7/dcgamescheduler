@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}{{ event.title }}{% endblock %}
+
+{% block content %}
+    <div class="wholepage container showgrid">
+        <div class="span-24 last prepend-top">
+            <p>
+                <a href="{% url index %}">Calendar</a><br/>
+                <a href="{% url events_for_game event.game.id %}">Events for game</a>
+            </p>
+        </div>
+        <div class="span-8 prepend-top">
+            {% load timezone_filters %}
+            {% load gravatar_tags %}
+            <h2>Game In Action:</h2>
+            <h3><a href="{{ event.game.get_absolute_url }}">{{ event.game.name }}</a></h3>
+            <p><a href="{% url game_details event.game.id %}"><img src="{{ event.game.thumbnail.url }}" alt="Screen" class="span-5" /></a></p>
+            <hr class="space" />
+            <h3 class="span-3 last">Submitter: </h3>
+            <p class="span-2" style="margin-left: -16px; text-align: center;"><a href="#" title="{{ event.submitter.username }}"><img src="{% gravatar_for_user event.submitter 60 %}" alt="gravatar image" class="span-2" /></a><br/><strong>{{ event.submitter.username }}</strong></p>
+
+            <h3 class="clear">Number Attending: {{ num_attendees }}</h3>
+            {% if attendees %}<p><strong>Attendee{{ attendees|pluralize }}:</strong></p>
+                {% for attendee in attendees %}<a href="#" title="{{ attendee }}"><img src="{% gravatar_for_user attendee 30 %}" alt="gravatar image" class="span-1" /></a>{% endfor %}{% endif %}
+        </div>
+        <div class="span-16 last prepend-top">
+            <h1{% if user == event.submitter %} class="bottom"{% endif %}>{{ event.title }}</h1>
+            {% if user == event.submitter or user.is_superuser %}<p><a href="{% url event_edit event.id %}">Edit Details</a></p>{% endif %}
+            <p>{{ event.description }}</p>
+            <hr />
+
+            <p class="bottom">Submitter: <strong>{{ event.submitter.username }}</strong></p>
+            <p class="bottom">Time: 
+                {% if profile %}
+                    {{ event.start|localtime:profile.timezone|date:"h:i a" }} - {{ event.end|localtime:profile.timezone|date:"h:i a" }}
+                {% else %}
+                   {{ event.start|date:"h:i a" }} - {{ event.end|date:"h:i a" }}
+                {% endif %}</p>
+
+            {% if profile %}
+                {% if event.start|date != event.end|date %}
+                    <p class="top">Dates: {{ event.start|localtime:profile.timezone|date }} - {{ event.end|localtime:profile.timezone|date }}</p>
+                {% else %}
+                    <p>Date: {{ event.start|localtime:profile.timezone|date }}</p>
+                {% endif %}            
+            {% else %}
+                {% if event.start|date != event.end|date %}
+                    <p class="top">Dates: {{ event.start|date }} - {{ event.end|date }}</p>{% else %}<p>Date: {{ event.start|date }}</p>
+                {% endif %}
+            {% endif %}
+
+            <form action="{% if not is_attending %}{% url event_attend event.id %}{% else %}{% url event_unattend event.id %}{% endif %}" method="post">{% csrf_token %}
+                <input type="submit" value="{% if not is_attending %}Mark Attendance{% else %}Remove from Attendance{% endif %}" />
+            </form>
+        </div>
+        <div class="span-24 last prepend-top">
+        </div>
+    </div>
+{% endblock %}
+

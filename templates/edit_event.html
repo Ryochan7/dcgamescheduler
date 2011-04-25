@@ -1,0 +1,22 @@
+{% extends "create_event.html" %}
+
+{% block title %}edit: {{ event.title }}{% endblock %}
+
+{% block inner %}
+    <div class="span-10">
+        <h1>Edit Event:</h1><h1><a href="{% url event_details event.id %}">{{ event.title }}</a></h1>
+        <hr class="space" />
+        <p><strong>For Game:</strong> <a href="{% url event_details event.id %}" style="text-decoration: none;">{{ event.game.name }}</a></p>
+    </div>
+    <div class="span-14 last append-bottom">
+        <p><a href="{% url event_details event.id %}" style="text-decoration: none;"><img src="{{ event.game.thumbnail.url }}" class="span-6" alt="Screen" /></a></p>
+    </div>
+    <div class="span-20">
+        <form action="{% url event_edit event.id %}" method="post">{% csrf_token %}
+        <ul style="list-style: none; padding-left: 0px;">
+            {{ form.as_ul }}
+        </ul>
+            <input type="submit" value="Edit Event" />
+        </form>
+    </div>
+{% endblock %}

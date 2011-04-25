@@ -1,0 +1,8 @@
+Thank you for registering. In order to login to your account,
+you have {{ expiration_days }} day{{ expiration_days|pluralize }} to activate your account.
+If you do not register in the alloted time, your account will be
+deleted.
+
+{{ site.url }}accounts/activate/{{ activation_key }}
+
+You a bitch

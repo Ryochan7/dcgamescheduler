@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="wholepage container showgrid">
+        <div class="span-24 last" style="text-align: center;">
+            <h1>Game List</h1>
+        </div>
+        <div class="span-4">
+            <ul style="list-style: none;">
+                <li><a href="{% url index %}">Calendar</a></li>
+            </ul>
+        </div>
+        <div class="span-20 last">
+            {% for game in game_list %}
+                <a href="{% url game_details game.id %}"><img src="{{ game.thumbnail.url }}" alt="lkjfdkljs" class="span-3" /></a>
+                <p class="span-6 first">
+                    Game: <a href="{% url game_details game.id %}"><strong>{{ game.name }}</strong></a><br/>
+                    Number of events: <a href="{% url events_for_game game.id %}">{{ game.event__count }}</a><br/>
+                </p>
+                <hr class="space" />
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

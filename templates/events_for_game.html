@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Events for {{ game.name }}{% endblock %}
+{% block content %}
+    <div class="wholepage container showgrid">
+        <div class="span-24 last prepend-top" style="text-align: center;">
+            <h1>Events for <a href="{% url game_details game.id %}" style="text-decoration: none;">{{ game.name }}</a></h1>
+        </div>
+        <div class="span-4">
+            <p style="text-align: center;"><a href="{% url game_details game.id %}"><img src="{{ game.thumbnail.url }}" alt="Screen" class="span-4" /></a></p>
+            <hr class="space" />
+            <ul style="list-style: none;">
+                <li><a href="{% url index %}">Calendar</a></li>
+                <li><a href="{% url game_list %}">Game List</a></li>
+            </ul>
+        </div>
+        <div class="span-19 push-1 last">
+            {% load timezone_filters %}
+            {% load gravatar_tags %}
+            {% for event in event_list %}
+                <h3><a href="{{ event.get_absolute_url }}"/>{{ event.title }}</a></h3>
+                <p class="bottom">Submitter: <strong>{{ event.submitter.username }}</strong></p>
+                <p class="bottom">Time:
+                    {% if profile %}
+                        {{ event.start|localtime:profile.timezone|date:"h:i a" }} - {{ event.end|localtime:profile.timezone|date:"h:i a" }}
+                    {% else %}
+                        {{ event.start|date:"h:i a" }} - {{ event.end|date:"h:i a" }}
+                    {% endif %}
+                </p>
+
+                {% if profile %}
+                    {% if event.start.date != event.end.date %}
+                        <p class="small top bottom">Dates: {{ event.start|localtime:profile.timezone|date }} - {{ event.end|localtime:profile.timezone|date }}</p>
+                    {% else %}
+                        <p class="small bottom">Date: {{ event.start|localtime:profile.timezone|date }}</p>
+                    {% endif %}
+                {% else %}
+                    {% if event.start.date != event.end.date %}<p class="small top bottom">Dates: {{ event.start|date }} - {{ event.end|date }}</p>{% else %}<p class="small bottom">Date: {{ event.start|date }}</p>{% endif %}
+                {% endif %}
+                <p>Number Attending: {{ event.attendance__count }}</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
